@@ -1,0 +1,21 @@
+name: CI/CD - React App to ECS Fargate
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPO_URI: ${{ secrets.ECR_REPO_URI }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v3
+
+    - name: ⚙️ Configure AWS Credentials
+      uses: a
