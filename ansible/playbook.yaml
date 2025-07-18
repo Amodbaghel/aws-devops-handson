@@ -1,0 +1,27 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+        - git
+
+    - name: Clone React repo
+      git:
+        repo: "https://github.com/Amodbaghel/aws-devops-handson.git"
+        dest: /home/ubuntu/react-app
+
+    - name: Install dependencies
+      command: npm install
+      args:
+        chdir: /home/ubuntu/react-app
+
+    - name: Start app with nohup
+      shell: |
+        nohup npm start > output.log 2>&1 &
+      args:
+        chdir: /home/ubuntu/react-app
